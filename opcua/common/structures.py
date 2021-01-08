@@ -13,7 +13,9 @@ from datetime import datetime
 import uuid
 from enum import Enum, IntEnum, EnumMeta
 
-from lxml import objectify
+# lxml causes fatal errors in NX CAM (NX makes use of subinterpreters for threading which is a problem for Cypthon moudles like lxml or numpy).
+# The nx thredaed hint does not to seem have any effect in NX CAM, only works in NXOpen. Any way it only is used for custom OPC UA types which are neccessary.
+# from lxml import objectify
 
 from opcua.ua.ua_binary import Primitives
 from opcua import ua
@@ -142,13 +144,15 @@ class StructGenerator(object):
         self.model = []
 
     def make_model_from_string(self, xml):
-        obj = objectify.fromstring(xml)
-        self._make_model(obj)
+        # obj = objectify.fromstring(xml)
+        # self._make_model(obj)
+        pass
 
     def make_model_from_file(self, path):
-        obj = objectify.parse(path)
-        root = obj.getroot()
-        self._make_model(root)
+        # obj = objectify.parse(path)
+        # root = obj.getroot()
+        # self._make_model(root)
+        pass
 
     def _make_model(self, root):
         enums = {}
